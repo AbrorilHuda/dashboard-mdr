@@ -1,7 +1,8 @@
-import { updateSession } from "@/lib/supabase/middleware"
-
-export async function middleware(request: any) {
-  return await updateSession(request)
+import { middleware as checking } from "@/lib/supabase/middleware";
+import { NextResponse, type NextRequest } from "next/server";
+//updateSession
+export async function middleware(request: NextRequest): Promise<NextResponse> {
+  return await checking(request);
 }
 
 export const config = {
@@ -15,4 +16,4 @@ export const config = {
      */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
-}
+};

@@ -34,6 +34,7 @@ import {
   downloadUserData,
   deleteUserAccount,
 } from "@/lib/supabase/auth";
+import { generateIdCardPdf } from "@/lib/pdf/generateIdCardPdf";
 
 export function ProfileTab() {
   const { user, profile } = useAuth();
@@ -134,26 +135,35 @@ export function ProfileTab() {
 
     setIsLoading(true);
     try {
-      const { data, error } = await downloadUserData(user.id);
+      const { data, error }: { data: any; error: any } = await downloadUserData(
+        user.id
+      );
 
       if (error) {
         throw error;
       }
 
       // Create and download JSON file
-      const blob = new Blob([JSON.stringify(data, null, 2)], {
-        type: "application/json",
+      // const blob = new Blob([JSON.stringify(data, null, 2)], {
+      //   type: "application/json",
+      // });
+      // const url = URL.createObjectURL(blob);
+      // const a = document.createElement("a");
+      // a.href = url;
+      // a.download = `data-${user.email}-${
+      //   new Date().toISOString().split("T")[0]
+      // }.json`;
+      // document.body.appendChild(a);
+      // a.click();
+      // document.body.removeChild(a);
+      // URL.revokeObjectURL(url);
+
+      await generateIdCardPdf(data, {
+        primary: [35, 99, 255],
+        secondary: [72, 53, 189],
+        logoUrl: "/admin-avatar.png",
       });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `data-${user.email}-${
-        new Date().toISOString().split("T")[0]
-      }.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      console.log("PDF generated");
 
       toast({
         title: "Data berhasil diunduh",
