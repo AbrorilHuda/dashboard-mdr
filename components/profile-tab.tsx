@@ -34,7 +34,10 @@ import {
   downloadUserData,
   deleteUserAccount,
 } from "@/lib/supabase/auth";
-import { generateIdCardPdf } from "@/lib/pdf/generateIdCardPdf";
+import {
+  generateSuratKeteranganPdf,
+  SuratConfig,
+} from "@/lib/pdf/generateIdCardPdf";
 
 export function ProfileTab() {
   const { user, profile } = useAuth();
@@ -158,11 +161,15 @@ export function ProfileTab() {
       // document.body.removeChild(a);
       // URL.revokeObjectURL(url);
 
-      await generateIdCardPdf(data, {
-        primary: [35, 99, 255],
-        secondary: [72, 53, 189],
-        logoUrl: "/admin-avatar.png",
-      });
+      const config: SuratConfig = {
+        //nomorSurat: "21/2025/SKA", // isi jika mau custom
+        namaPenandatangan: "abrordc",
+        jabatanPenandatangan: "Lead",
+        organisasi: "maduradev",
+        logoUrl: "https://avatars.githubusercontent.com/u/195263666?s=200&v=4", // opsional
+      };
+
+      await generateSuratKeteranganPdf(data, config);
       console.log("PDF generated");
 
       toast({
