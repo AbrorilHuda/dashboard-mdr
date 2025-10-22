@@ -2,7 +2,6 @@ import { createClient } from "./client";
 
 export async function uploadEventImage(file: File, eventId: string) {
   const supabase = createClient();
-
   const fileExt = file.name.split(".").pop();
   const fileName = `${eventId}-${Date.now()}.${fileExt}`;
   const filePath = `${new Date()}/${fileName}`;

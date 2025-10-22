@@ -1,4 +1,3 @@
-// lib/generateSuratKeteranganPdf.ts
 import { jsPDF } from "jspdf";
 import QRCode from "qrcode";
 
@@ -248,38 +247,3 @@ export async function generateSuratKeteranganPdf(
   )}.pdf`;
   doc.save(fname);
 }
-
-// Contoh penggunaan:
-/*
-const userData: UserExport = {
-  profile: {
-    id: "123-456-789",
-    email: "user@example.com",
-    full_name: "John Doe",
-    avatar_url: null,
-    role: "Member",
-    bio: null,
-    location: "Jl. Contoh No. 123, Jakarta",
-    website: null,
-    created_at: "2024-01-01T00:00:00Z",
-    updated_at: "2024-01-01T00:00:00Z"
-  },
-  auth: {
-    id: "auth-123",
-    email: "user@example.com",
-    created_at: "2024-01-01T00:00:00Z",
-    last_sign_in_at: "2024-10-21T00:00:00Z"
-  },
-  exported_at: "2024-10-21T00:00:00Z"
-};
-
-const config: SuratConfig = {
-  nomorSurat: "21/2024/SKA",
-  namaPenandatangan: "abrordc",
-  jabatanPenandatangan: "Lead Developer",
-  organisasi: "maduradev",
-  logoUrl: "https://example.com/logo.png" // opsional
-};
-
-await generateSuratKeteranganPdf(userData, config);
-*/

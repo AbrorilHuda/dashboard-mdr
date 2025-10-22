@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useToast } from "@/hooks/use-toast"; // Import useToast hook
+import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,7 @@ import {
 import {
   generateSuratKeteranganPdf,
   SuratConfig,
+  UserExport,
 } from "@/lib/pdf/generateIdCardPdf";
 
 export function ProfileTab() {
@@ -138,9 +139,7 @@ export function ProfileTab() {
 
     setIsLoading(true);
     try {
-      const { data, error }: { data: any; error: any } = await downloadUserData(
-        user.id
-      );
+      const { data, error } = await downloadUserData(user.id);
 
       if (error) {
         throw error;
@@ -169,7 +168,7 @@ export function ProfileTab() {
         logoUrl: "https://avatars.githubusercontent.com/u/195263666?s=200&v=4", // opsional
       };
 
-      await generateSuratKeteranganPdf(data, config);
+      await generateSuratKeteranganPdf(data as UserExport, config);
       console.log("PDF generated");
 
       toast({
